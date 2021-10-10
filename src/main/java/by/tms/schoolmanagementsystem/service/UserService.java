@@ -1,15 +1,16 @@
 package by.tms.schoolmanagementsystem.service;
 
+import by.tms.schoolmanagementsystem.entity.lesson.Lesson;
 import by.tms.schoolmanagementsystem.entity.user.UnconfirmedUser;
 import by.tms.schoolmanagementsystem.entity.role.Role;
 import by.tms.schoolmanagementsystem.entity.role.UserRole;
 import by.tms.schoolmanagementsystem.entity.user.User;
-import by.tms.schoolmanagementsystem.repository.RoleRepository;
-import by.tms.schoolmanagementsystem.repository.UnconfirmedUserRepository;
-import by.tms.schoolmanagementsystem.repository.UserRepository;
+import by.tms.schoolmanagementsystem.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ public class UserService {
     private UserRepository userRepository;
     private UnconfirmedUserRepository unconfirmedUserRepository;
     private RoleRepository roleRepository;
+    private MarkRepository markRepository;
+    private LessonRepository lessonRepository;
 
     public Optional<User> findById(long id){
         return userRepository.findById(id);
@@ -68,11 +71,21 @@ public class UserService {
         return userRepository.getAllConfirmedUsers();
     }
 
+    @Transactional
     public void deleteById(long id){
         if(unconfirmedUserRepository.existsByUser_Id(id)){
             unconfirmedUserRepository.deleteByUserId(id);
         }
         if (userRepository.existsById(id)){
+            User byId = userRepository.getById(id);
+            markRepository.deleteAllByUser(byId);
+
+            ArrayList<Lesson> lessons = lessonRepository.findAllByStudentsContains(byId);
+            for (Lesson lesson : lessons) {
+                lesson.getStudents().remove(byId);
+                lessonRepository.save(lesson);
+            }
+
             userRepository.deleteById(id);
         }
 
