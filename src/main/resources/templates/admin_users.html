@@ -69,9 +69,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-8 pe-0">
                                                         <select name="newRole" class="form-select">
-                                                            <option th:each="role : ${T(by.tms.schoolmanagementsystem.entity.role.Role).values()}"
-                                                                    th:value="${role}"
-                                                                    th:text="${role}"></option>
+                                                            <th:block th:each="role : ${T(by.tms.schoolmanagementsystem.entity.role.Role).values()}">
+                                                                <option th:if="${user.role==role}" th:value="${role}" th:text="${role}" selected></option>
+                                                                <option th:if="${user.role!=role}" th:value="${role}" th:text="${role}"></option>
+                                                            </th:block>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-4 px-0">

@@ -130,7 +130,7 @@
         </div>
     </div>
 
-    <div class="row mt-1 mb-1 ms-5 justify-content-center" th:each="i : ${#numbers.sequence(1, 4)}">
+    <div class="row mt-1 mb-1 ms-5 justify-content-center" th:each="i : ${#numbers.sequence(1, 4)}" style="width: 1000px">
         <div class="card ms-1 me-1 shadow bg-body " style="width: 12rem; height: 8rem; border-radius: 10px;" th:each="j : ${#numbers.sequence(1, 5)}" >
             <div class="card-body pe-0 ps-0 pt-1">
                 <h5 class="card-title mb-0">Card title</h5>
@@ -140,6 +140,33 @@
             </div>
         </div>
     </div>
+    <div class="row justify-content-end">
+        <div class="col-sm-2" style="position: fixed; bottom: 2%; right: 1%">
+            <div class="row justify-content-end">
+                <div class="col-sm-10 mt-5" style="width: 65px; height: 55px">
+                    <form th:action="@{/admin/announcement/new}">
+                        <button type="submit" class="btn btn-outline-warning" style="border-radius: 100%; width: 45px; height: 45px; margin-right: 10px">
+                            <div style="margin-top: 60%; margin-left: 30%">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="margin-bottom: 10px">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-sm-2">
+                    <span style="writing-mode: vertical-lr; margin-top: 20%">
+                    New announcement
+                    </span>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
 
 </div>
 

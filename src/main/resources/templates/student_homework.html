@@ -11,16 +11,22 @@
 <body>
     <div class="container">
         <div class="row justify-content-center mt-2">
-            <div class="col-sm-7">
-                <ul class="list-group">
-                    <li class="list-group-item" th:each="item : ${homework}">
-                        <h4 th:text="${item.lesson.name}"></h4>
-                        <h5 th:text="${item.name}"></h5>
-                        <h6 th:text="${item.deadline}"></h6>
-                        <p th:text="${item.description}"></p>
-                    </li>
-                </ul>
-            </div>
+            <th:block th:if="${session.user.role==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
+                    <div class="col-sm-7">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="item : ${homework}">
+                                <h4 th:text="${item.lesson.name}"></h4>
+                                <h5 th:text="${item.name}"></h5>
+                                <h6 th:text="${item.deadline}"></h6>
+                                <p th:text="${item.description}"></p>
+                            </li>
+                        </ul>
+                    </div>
+            </th:block>
+            <th:block th:unless="${session.user.role==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
+                <div class="col-sm-5" th:insert="_no_data :: div"></div>
+            </th:block>
+
         </div>
     </div>
 

@@ -78,15 +78,22 @@ public class UserService {
         }
         if (userRepository.existsById(id)){
             User byId = userRepository.getById(id);
-            markRepository.deleteAllByUser(byId);
-
-            ArrayList<Lesson> lessons = lessonRepository.findAllByStudentsContains(byId);
-            for (Lesson lesson : lessons) {
-                lesson.getStudents().remove(byId);
-                lessonRepository.save(lesson);
+            if(byId.getRole()==Role.Student){
+                markRepository.deleteAllByUser(byId);
+                ArrayList<Lesson> lessons = lessonRepository.findAllByStudentsContains(byId);
+                for (Lesson lesson : lessons) {
+                    lesson.getStudents().remove(byId);
+                    lessonRepository.save(lesson);
+                }
+                userRepository.deleteById(id);
+            } else {
+                byId.setName("Deleted");
+                byId.setUsername("Deleted");
+                byId.setEmail("Forbidden");
+                byId.setPassword("");
+                userRepository.save(byId);
             }
 
-            userRepository.deleteById(id);
         }
 
     }
