@@ -1,7 +1,13 @@
 package by.tms.schoolmanagementsystem.controller;
 
+import by.tms.schoolmanagementsystem.entity.announcement.Announcement;
+import by.tms.schoolmanagementsystem.entity.announcement.AnnouncementDto;
+import by.tms.schoolmanagementsystem.entity.role.Role;
+import by.tms.schoolmanagementsystem.entity.role.UserRole;
 import by.tms.schoolmanagementsystem.entity.user.User;
 import by.tms.schoolmanagementsystem.service.EmailService;
+import by.tms.schoolmanagementsystem.service.NewsService;
+import by.tms.schoolmanagementsystem.service.RoleService;
 import by.tms.schoolmanagementsystem.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,6 +26,8 @@ import java.util.Optional;
 public class UserController {
     private UserService userService;
     private EmailService emailService;
+    private NewsService newsService;
+    private RoleService roleService;
 
     @GetMapping("/reg")
     public ModelAndView getUserRegPage(ModelAndView modelAndView){
@@ -68,12 +76,41 @@ public class UserController {
             User user = byUsername.get();
             if(user.getPassword().equals(authUser.getPassword())){
                 session.setAttribute("user", user);
-                modelAndView.setViewName("home");
+                modelAndView.setViewName("redirect:/home");
                 return modelAndView;
             }
         }
         modelAndView.addObject("isDataValid", false);
         modelAndView.setViewName("authorization");
+        return modelAndView;
+    }
+
+    @GetMapping("/announcement/new")
+    public ModelAndView getAnnouncementPage(ModelAndView modelAndView){
+        modelAndView.addObject("announcementDto", new AnnouncementDto());
+        modelAndView.setViewName("new_announcement");
+        return modelAndView;
+    }
+
+    @PostMapping("/announcement/new")
+    public ModelAndView createAnnouncement(@Valid @ModelAttribute AnnouncementDto announcementDto, BindingResult bindingResult, HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        if(bindingResult.hasErrors()){
+            modelAndView.setViewName("new_announcement");
+            return modelAndView;
+        }
+        User author = (User) session.getAttribute("user");
+        Role role = announcementDto.role;
+        String title = announcementDto.title;
+        String text = announcementDto.text;
+        Announcement newAnnouncement = new Announcement();
+        newAnnouncement.setAuthor(author);
+        UserRole userRole = roleService.getUserRole(role);
+        newAnnouncement.setDestinationRole(userRole);
+        newAnnouncement.setTitle(title);
+        newAnnouncement.setText(text);
+        newsService.save(newAnnouncement);
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 }

@@ -9,10 +9,11 @@
 <body>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-8 mt-2">
+        <div th:if="${lessons.isEmpty()}" class="col-sm-8" th:insert="_no_data :: div"></div>
+        <div th:unless="${lessons.isEmpty}" class="col-sm-8 mt-2">
             <form action="#" th:action="@{/lesson/add/homework}" th:object="${newHomework}" method="post">
                 <select class="form-select" th:field="*{lessonId}" aria-label="Default select example" >
-                    <option th:each="l : ${lessons}" th:value="${l.id}" ><span th:text="${l.name}"></span></option>
+                    <option th:each="l : ${lessons}" th:value="${l.id}"><span th:text="${l.name}"></span></option>
                 </select>
                 <div class="mb-3">
                     <input type="text" class="form-control" th:field="*{name}" placeholder="Description" required/>

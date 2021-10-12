@@ -8,9 +8,11 @@ import by.tms.schoolmanagementsystem.entity.user.User;
 import by.tms.schoolmanagementsystem.repository.LessonRepository;
 import by.tms.schoolmanagementsystem.repository.PlanRepository;
 import by.tms.schoolmanagementsystem.repository.TimeTermRepository;
+import by.tms.schoolmanagementsystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class LessonService {
     private PlanRepository planRepository;
     private TimeTermRepository timeTermRepository;
     private LessonRepository lessonRepository;
+    private UserRepository userRepository;
 
     public void save(Lesson lesson){
         if(lesson!=null){
@@ -44,6 +47,14 @@ public class LessonService {
             return List.of();
         }
         return lessonRepository.findAllByTeacher(user);
+    }
+
+    public List<Lesson> getAllForStudent(User student){
+        if(student==null || !userRepository.existsById(student.getId())){
+            return List.of();
+        } else {
+            return lessonRepository.findAllByStudentsContains(student);
+        }
     }
 
 }

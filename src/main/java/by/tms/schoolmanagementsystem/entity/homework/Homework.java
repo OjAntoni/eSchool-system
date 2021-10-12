@@ -29,7 +29,6 @@ public class Homework {
     private String description;
     @NotNull
     private LocalDateTime start;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull
     private LocalDateTime deadline;
 

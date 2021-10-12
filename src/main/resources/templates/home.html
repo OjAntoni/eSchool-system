@@ -54,7 +54,7 @@
             </form>
         </div>
         <div class="col-sm-2">
-            <form action="#">
+            <form action="#" th:action="@{/student/teachers/all}">
                 <button type="submit" class="btn btn-primary pb-0 pt-2" style="border-radius: 10px; background-color: #eeb206; border: none; width: 160px; height: 80px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
                         <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
@@ -130,6 +130,35 @@
         </div>
     </div>
 
+    <div class="row justify-content-center" style="width: 1140px">
+        <div class="col-sm-11" style="width: 90%; margin-right: 2%">
+            <div class="card shadow bg-body" style="width: 100%;">
+                <div class="card-body">
+                    <h4>News for you</h4>
+                    <div th:each="item : ${news}" class="card" style="width: 100%;">
+                        <div class="card-body py-0 mx-1" style="height: 50px">
+                            <div class="row justify-content-between">
+                                <div class="col-sm-8 pt-3">
+                                    <h5 th:text="${item.title}"></h5>
+                                </div>
+                                <div class="col-sm-3 pe-0">
+                                    <p th:text="${'from '+item.author.name}" style="margin-bottom: 0"></p>
+                                    <p th:text="${item.localDateTime}" style="margin-top: 0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row ms-4 mt-1">
+        <div class="col-sm-4 ms-5">
+            <p class="fs-3 fw-bold">Your plan</p>
+        </div>
+    </div>
+
     <div class="row mt-1 mb-1 ms-5 justify-content-center" th:each="i : ${#numbers.sequence(1, 4)}" style="width: 1000px">
         <div class="card ms-1 me-1 shadow bg-body " style="width: 12rem; height: 8rem; border-radius: 10px;" th:each="j : ${#numbers.sequence(1, 5)}" >
             <div class="card-body pe-0 ps-0 pt-1">
@@ -140,11 +169,12 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-end">
+
+    <div th:unless="${session.user.getRole()==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}" class="row justify-content-end">
         <div class="col-sm-2" style="position: fixed; bottom: 2%; right: 1%">
             <div class="row justify-content-end">
                 <div class="col-sm-10 mt-5" style="width: 65px; height: 55px">
-                    <form th:action="@{/admin/announcement/new}">
+                    <form th:action="@{/user/announcement/new}">
                         <button type="submit" class="btn btn-outline-warning" style="border-radius: 100%; width: 45px; height: 45px; margin-right: 10px">
                             <div style="margin-top: 60%; margin-left: 30%">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="margin-bottom: 10px">
