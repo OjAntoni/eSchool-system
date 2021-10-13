@@ -12,8 +12,19 @@
 <body>
 <div class="container">
     <div class="row mt-2 mb-2 justify-content-center">
-        <div class="col-sm-2">
+        <div class="col-sm-2" th:if="${session.user.getRole==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
             <form action="#" class="pe-0" th:action="@{/student/homework/all}">
+                <button type="submit" class="btn btn-primary pb-0 pt-2" style="border-radius: 10px; background-color: #eeb206; border: none; width: 160px; height: 80px">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                    </svg>
+                    <p>My homework</p>
+                </button>
+            </form>
+        </div>
+        <div class="col-sm-2" th:unless="${session.user.getRole==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
+            <form action="#" class="pe-0" th:action="@{/teacher/homework/all}">
                 <button type="submit" class="btn btn-primary pb-0 pt-2" style="border-radius: 10px; background-color: #eeb206; border: none; width: 160px; height: 80px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
@@ -136,17 +147,19 @@
                 <div class="card-body">
                     <h4>News for you</h4>
                     <div th:each="item : ${news}" class="card" style="width: 100%;">
-                        <div class="card-body py-0 mx-1" style="height: 50px">
-                            <div class="row justify-content-between">
-                                <div class="col-sm-8 pt-3">
-                                    <h5 th:text="${item.title}"></h5>
-                                </div>
-                                <div class="col-sm-3 pe-0">
-                                    <p th:text="${'from '+item.author.name}" style="margin-bottom: 0"></p>
-                                    <p th:text="${item.localDateTime}" style="margin-top: 0"></p>
+                        <a href="#" th:href="@{'/user/announcement/'+${item.getId()}}" class="list-group-item list-group-item-action" style="border-width: 0">
+                            <div class="card-body py-0 mx-1" style="height: 50px">
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-8 pt-3">
+                                        <h5 th:text="${item.title}"></h5>
+                                    </div>
+                                    <div class="col-sm-3 pe-0">
+                                        <p th:text="${'from '+item.author.name}" style="margin-bottom: 0"></p>
+                                        <p th:text="${item.localDateTime.toLocalDate() + ' ' + item.localDateTime.toLocalTime()}" style="margin-top: 0"></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

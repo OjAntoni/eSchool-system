@@ -113,4 +113,17 @@ public class UserController {
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+    @GetMapping("/announcement/{id}")
+    public ModelAndView getFullAnnouncementPage(@PathVariable long id, ModelAndView modelAndView){
+        Optional<Announcement> byId = newsService.getById(id);
+        if(byId.isEmpty()){
+            modelAndView.setViewName("home");
+            return modelAndView;
+        }
+        Announcement announcement = byId.get();
+        modelAndView.addObject("announcement", announcement);
+        modelAndView.setViewName("announcement");
+        return modelAndView;
+    }
 }

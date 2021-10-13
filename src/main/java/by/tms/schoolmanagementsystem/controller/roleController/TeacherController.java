@@ -9,6 +9,7 @@ import by.tms.schoolmanagementsystem.service.HomeworkService;
 import by.tms.schoolmanagementsystem.service.LessonService;
 import by.tms.schoolmanagementsystem.service.UserService;
 import lombok.AllArgsConstructor;
+import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,6 +62,15 @@ public class TeacherController {
                 homeworkService.updateMark(marksIds[i], values[i]);
             }
         }
+        return modelAndView;
+    }
+
+    @GetMapping("/homework/all")
+    public ModelAndView getTeacherHomeworkPage(ModelAndView modelAndView, HttpSession session){
+        User teacher = (User) session.getAttribute("user");
+        List<Homework> homework = homeworkService.getAllForTeacher(teacher);
+        modelAndView.addObject("homework", homework);
+        modelAndView.setViewName("teacher_homework");
         return modelAndView;
     }
 }

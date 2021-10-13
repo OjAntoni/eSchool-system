@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,5 +28,10 @@ public class NewsService {
     @Transactional
     public void save(Announcement announcement){
         announcementRepository.save(announcement);
+    }
+
+    @Transactional
+    public Optional<Announcement> getById(long id){
+        return announcementRepository.findById(id);
     }
 }
