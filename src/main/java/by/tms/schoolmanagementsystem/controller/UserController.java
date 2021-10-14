@@ -110,7 +110,7 @@ public class UserController {
         newAnnouncement.setTitle(title);
         newAnnouncement.setText(text);
         newsService.save(newAnnouncement);
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }
 

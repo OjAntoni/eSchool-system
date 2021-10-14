@@ -1,0 +1,8 @@
+body.background{
+    background-image: url("static/img/background.png");
+    background-repeat: no-repeat; height: 100vh;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}

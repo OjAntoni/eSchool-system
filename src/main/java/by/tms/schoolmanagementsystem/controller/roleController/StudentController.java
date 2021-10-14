@@ -47,4 +47,13 @@ public class StudentController {
         modelAndView.setViewName("teachers");
         return modelAndView;
     }
+
+    @GetMapping("/lessons")
+    public ModelAndView getMyLessons(ModelAndView modelAndView, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        List<Lesson> allForStudent = lessonService.getAllForStudent(user);
+        modelAndView.addObject("lessons", allForStudent);
+        modelAndView.setViewName("my_lessons");
+        return modelAndView;
+    }
 }

@@ -2,8 +2,7 @@ package by.tms.schoolmanagementsystem.configuration;
 
 import by.tms.schoolmanagementsystem.interceptor.*;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
@@ -13,14 +12,23 @@ public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/user/reg")
                 .excludePathPatterns("/user/auth");
         registry.addInterceptor(new StudentInterceptor())
-                .addPathPatterns("student/**");
+                .addPathPatterns("student/**")
+                .excludePathPatterns("user/announcement/{id}")
+                .excludePathPatterns("/lesson/{id}");
         registry.addInterceptor(new TeacherInterceptor())
                 .addPathPatterns("/teacher/**")
                 .addPathPatterns("/lesson/**")
-                .excludePathPatterns("/lesson/{id}");
+                .excludePathPatterns("/lesson/{id}")
+                .excludePathPatterns("user/announcement/{id}");
         registry.addInterceptor(new AdminInterceptor())
                 .addPathPatterns("/admin/**");
-        registry.addInterceptor(new NotUserInterceptor())
-                .addPathPatterns("/user/announcement/**");
+        registry.addInterceptor(new NotStudentInterceptor())
+                .addPathPatterns("/user/announcement/new/**");
     }
+
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/static/**")
+//                .addResourceLocations("/static/");
+//    }
 }

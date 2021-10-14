@@ -172,14 +172,23 @@
         </div>
     </div>
 
-    <div class="row mt-1 mb-1 ms-5 justify-content-center" th:each="i : ${#numbers.sequence(1, 4)}" style="width: 1000px">
-        <div class="card ms-1 me-1 shadow bg-body " style="width: 12rem; height: 8rem; border-radius: 10px;" th:each="j : ${#numbers.sequence(1, 5)}" >
-            <div class="card-body pe-0 ps-0 pt-1">
-                <h5 class="card-title mb-0">Card title</h5>
-                <h6 class="card-subtitle mb-0 text-muted">Card subtitle</h6>
-                <p class="card-text mb-0 text-wrap">Some quick example text</p>
-                <a href="#" class="card-link">Card link</a>
+    <div class="row mt-1 mb-1 ms-5 justify-content-center" th:each="i : ${#numbers.sequence(0, 3)}" style="width: 1000px">
+        <div class="card ms-1 me-1 shadow bg-body " style="width: 12rem; height: 8rem; border-radius: 10px;" th:each="j : ${#numbers.sequence(0, 4)}" >
+
+            <div th:if="${timetable[i][j]!=null}" class="card-body pe-0 ps-0 pt-1">
+                <h5 class="card-title mb-0" th:text="${timetable[i][j].name}"></h5>
+                <h6 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${timetable[i][j].getTimeTerm().timeBlock.getStringValue()}"></h6>
+                <p class="card-text mb-0 text-wrap" th:text="${timetable[i][j].teacher.name}">Some quick example text</p>
+                <a href="#" th:href="@{'/lesson/'+${timetable[i][j].id}}" class="card-link">Show more</a>
             </div>
+
+            <div th:unless="${timetable[i][j]!=null}" class="card-body pe-0 ps-0 pt-1" style="opacity: 0">
+                <h5 class="card-title mb-0"></h5>
+                <h6 class="card-subtitle mb-0 text-muted"></h6>
+                <p class="card-text mb-0 text-wrap"></p>
+                <a href="#" class="card-link"></a>
+            </div>
+
         </div>
     </div>
 

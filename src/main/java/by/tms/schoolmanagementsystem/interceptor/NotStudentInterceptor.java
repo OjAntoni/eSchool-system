@@ -7,10 +7,16 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class NotUserInterceptor implements HandlerInterceptor {
+public class NotStudentInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
-        return user.getRole() != Role.Student;
+        if(user.getRole() == Role.Student){
+            response.sendRedirect("/home");
+            return false;
+        } else{
+            return true;
+        }
+
     }
 }
