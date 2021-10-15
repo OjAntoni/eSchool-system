@@ -2,9 +2,11 @@ package by.tms.schoolmanagementsystem.configuration;
 
 import by.tms.schoolmanagementsystem.interceptor.*;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
+@EnableAspectJAutoProxy
 public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

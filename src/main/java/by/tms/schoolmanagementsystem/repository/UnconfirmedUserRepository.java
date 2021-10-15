@@ -3,6 +3,7 @@ package by.tms.schoolmanagementsystem.repository;
 import by.tms.schoolmanagementsystem.entity.user.UnconfirmedUser;
 import by.tms.schoolmanagementsystem.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,6 +14,7 @@ public interface UnconfirmedUserRepository extends JpaRepository<UnconfirmedUser
     UnconfirmedUser getByUser(User user);
     @Query("select uu.user from UnconfirmedUser uu")
     List<User> getAll();
+    @Modifying
     @Query("delete from UnconfirmedUser uu where uu.user.id=:id")
     void deleteByUserId(@Param(value = "id") long id);
     boolean existsByUser_Id(long id);

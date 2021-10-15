@@ -1,5 +1,8 @@
 package by.tms.schoolmanagementsystem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
@@ -8,5 +11,8 @@ public class Main {
         LocalTime localTime = LocalTime.of(8, 30);
         System.out.println(localTime);
         System.out.println(DayOfWeek.THURSDAY.getValue());
+
+        Logger logger = LoggerFactory.getLogger(Main.class);
+        logger.info("some info msg");
     }
 }

@@ -11,6 +11,7 @@ import by.tms.schoolmanagementsystem.repository.TimeTermRepository;
 import by.tms.schoolmanagementsystem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class LessonService {
     private LessonRepository lessonRepository;
     private UserRepository userRepository;
 
+    @Transactional
     public void save(Lesson lesson){
         if(lesson!=null){
             Plan lessonPlan = lesson.getLessonPlan();
@@ -34,14 +36,17 @@ public class LessonService {
         }
     }
 
+    @Transactional
     public List<Lesson> getAll(){
         return lessonRepository.findAll();
     }
 
+    @Transactional
     public Lesson getById(long id){
         return lessonRepository.getById(id);
     }
 
+    @Transactional
     public List<Lesson> getAllForTeacher(User user){
         if(user.getRole()!= Role.Teacher){
             return List.of();
@@ -49,6 +54,7 @@ public class LessonService {
         return lessonRepository.findAllByTeacher(user);
     }
 
+    @Transactional
     public List<Lesson> getAllForStudent(User student){
         if(student==null || !userRepository.existsById(student.getId())){
             return List.of();
