@@ -12,11 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    public JavaMailSender emailSender;
+    private JavaMailSender emailSender;
 
 
     public void sendEmail(String toAddress, String subject, String message) {
-
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(toAddress);
         simpleMailMessage.setSubject(subject);

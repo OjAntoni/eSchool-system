@@ -8,11 +8,14 @@ import org.springframework.web.servlet.config.annotation.*;
 @Configuration
 @EnableAspectJAutoProxy
 public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new UserInterceptor())
                 .excludePathPatterns("/user/reg")
-                .excludePathPatterns("/user/auth");
+                .excludePathPatterns("/user/auth")
+                .excludePathPatterns("/user/password/*")
+                .excludePathPatterns("/error");
         registry.addInterceptor(new StudentInterceptor())
                 .addPathPatterns("student/**")
                 .excludePathPatterns("user/announcement/{id}")
@@ -26,11 +29,14 @@ public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/admin/**");
         registry.addInterceptor(new NotStudentInterceptor())
                 .addPathPatterns("/user/announcement/new/**");
+        registry.addInterceptor(new AuthorizedInterceptor())
+                .addPathPatterns("/user/auth")
+                .addPathPatterns("/user/reg");
     }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/static/**")
-//                .addResourceLocations("/static/");
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/static/");
+    }
 }

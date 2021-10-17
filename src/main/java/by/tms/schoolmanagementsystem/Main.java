@@ -1,5 +1,6 @@
 package by.tms.schoolmanagementsystem;
 
+import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,5 +15,7 @@ public class Main {
 
         Logger logger = LoggerFactory.getLogger(Main.class);
         logger.info("some info msg");
+
+        System.out.println(RandomString.make(10));
     }
 }

@@ -48,7 +48,7 @@ public class LessonService {
 
     @Transactional
     public List<Lesson> getAllForTeacher(User user){
-        if(user.getRole()!= Role.Teacher){
+        if(user==null || user.getRole()!= Role.Teacher){
             return List.of();
         }
         return lessonRepository.findAllByTeacher(user);
