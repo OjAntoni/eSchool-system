@@ -99,4 +99,16 @@ public class LessonController {
         homeworkService.save(homework);
         return "redirect:/home";
     }
+
+    @GetMapping("/homework/{id}")
+    public ModelAndView showHomework(ModelAndView modelAndView, @PathVariable long id){
+        Optional<Homework> byId = homeworkService.getById(id);
+        if(byId.isPresent()){
+            modelAndView.addObject("homework", byId.get());
+            modelAndView.setViewName("homework");
+        } else {
+            modelAndView.setViewName("redirect:/teacher/homework/all");
+        }
+        return modelAndView;
+    }
 }

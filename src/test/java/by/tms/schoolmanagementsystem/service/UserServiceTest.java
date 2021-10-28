@@ -37,7 +37,7 @@ class UserServiceTest {
 
     @BeforeEach
     void beforeEach(){
-        this.userService = new UserService(userRepository, unconfirmedUserRepository, roleRepository, markRepository, lessonRepository);
+        this.userService = new UserService(userRepository, unconfirmedUserRepository, roleRepository, markRepository, lessonRepository, null);
     }
 
     @Test

@@ -12,9 +12,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="list-group col-sm-6">
-                <a th:each="item : ${homework}"
-                   href="#" class="list-group-item list-group-item-action"
-                   th:text="${item.name}"></a>
+                <th:block th:each="item : ${homework}">
+                        <a href="#" th:href="@{'/lesson/homework/'+${item.id}}"
+                           class="list-group-item list-group-item-action"
+                           th:text="${item.name}">
+                        </a>
+                </th:block>
             </div>
         </div>
     </div>

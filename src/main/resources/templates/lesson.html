@@ -12,21 +12,32 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="card" style="width: 30rem;">
-                <div class="card-body col-sm-8">
+            <div class="card mt-2 shadow bg-body" style="width: 30rem;">
+                <div class="card-body col-sm-12">
                     <h5 class="card-title" th:text="${lesson.name}"></h5>
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${lesson.teacher.name + ' ' + lesson.teacher.username}"></h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <h6 class="card-title">Students:</h6>
-                    <ul class="list-group">
-                        <li class="list-group-item" th:each="student : ${lesson.getStudents()}" th:text="${student}"></li>
+                    <ul class="list-group shadow bg-body rounded">
+                        <li class="list-group-item" th:each="student : ${lesson.getStudents()}">
+                            <div class="row justify-content-between">
+                                <div class="col-sm-5">
+                                    <span th:text="${'Name: '+student.name}"></span>
+                                    <br>
+                                    <span class="text-nowrap" th:text="${'Username: '+student.username}"></span>
+                                </div>
+                                <div class="col-sm-7 text-nowrap">
+                                    <p class="text-end" th:text="${student.email}"></p>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                     <div th:if="${session.user.getRole()==T(by.tms.schoolmanagementsystem.entity.role.Role).Teacher}">
-                        <p>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Students on this lesson
+                            <button class="btn btn-primary my-2 col-sm-12" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                                    style="background-color: #eeb206; border-width: 0">
+                                Manage students on this lesson
                             </button>
-                        </p>
                         <div class="collapse" id="collapseExample">
                             <div class="card card-body">
                                 <form action="#" th:action="@{'/lesson/'+${lesson.id}+'/add/students'}" method="post">
@@ -43,12 +54,21 @@
                                             <br>
                                         </th:block>
                                     </div>
-                                    <button type="submit">Submit</button>
+                                    <button type="submit" style="margin-left: 20px">Submit</button>
                                 </form>
                             </div>
                         </div>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-3">
+                                <a href="#" th:href="@{/home}" class="card-link">Go home</a>
+                            </div>
+                            <div class="col-sm-2" th:if="${session.user.role==T(by.tms.schoolmanagementsystem.entity.role.Role).Teacher}">
+                                <a href="#" th:href="@{/teacher/lessons}" class="card-link">Back</a>
+                            </div>
+                            <div class="col-sm-2" th:if="${session.user.role==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
+                                <a href="#" th:href="@{/student/lessons}" class="card-link">Back</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

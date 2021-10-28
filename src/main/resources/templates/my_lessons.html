@@ -12,9 +12,38 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h3>Lesson</h3>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Teacher</h3>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Day</h3>
+                    </div>
+                    <div class="col-sm-3">
+                        <h3>Time</h3>
+                    </div>
+                </div>
                 <div class="list-group">
-                    <a th:href="@{'/lesson/'+${lesson.id}}" class="list-group-item list-group-item-action" th:each="lesson : ${lessons}" th:text="${lesson}"></a>
+                    <a th:href="@{'/lesson/'+${lesson.id}}" class="list-group-item list-group-item-action" th:each="lesson : ${lessons}">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <span th:text="${lesson.name}"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span th:text="${lesson.teacher.name}"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span th:text="${lesson.getDay().name()}"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <span th:text="${'on '+lesson.getTimeTerm().timeBlock.stringValue}"></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

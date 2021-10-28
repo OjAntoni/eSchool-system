@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<nav th:insert="_header :: nav"></nav>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-3">
+            <div class="col-sm-6">
+                <th:block th:if="${errorMessages.size()>0}">
+                    <ul class="list-group">
+                        <li th:each="error : ${errorMessages}" class="list-group-item px-0 py-0">
+                            <div class="alert alert-warning my-0 mx-0" role="alert" th:text="${error}">
+                                A simple warning alert—check it out!
+                            </div>
+                        </li>
+                    </ul>
+                </th:block>
+                <h4 class="card-title">Name</h4>
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" th:value="${info.user.name}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 pt-1">
+                            <button type="submit" class="btn btn-primary btn-sm" disabled>Change</button>
+                        </div>
+                    </div>
+                </form>
+                <h4 class="card-title">Username</h4>
+                <form action="#" th:action="@{/user/username/change}" method="post">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="newUsername" th:value="${info.user.username}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 pt-1">
+                            <button type="submit" class="btn btn-primary btn-sm ">Change</button>
+                        </div>
+                    </div>
+                </form>
+                <h4 class="card-title">Email</h4>
+                <form action="#" th:action="@{/user/email/change}" method="post">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" name="newEmail" th:value="${info.user.email}" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 pt-1">
+                            <button type="submit" class="btn btn-primary btn-sm">Change</button>
+                        </div>
+                    </div>
+                </form>
+                <h4 class="card-title">Password</h4>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="mb-3">
+                            <input type="password" class="form-control" th:value="${info.user.password}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 pt-1">
+                        <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Change
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <form action="#" th:action="@{/user/password/change}" th:object="${userNewPasswordDto}" method="post">
+                                    <label for="actual">Your actual password</label>
+
+                                    <input type="password" class="form-control mb-0" id="actual" th:field="${userNewPasswordDto.oldPassword}">
+
+                                    <label for="new">New password</label>
+
+                                    <input type="password" class="form-control mb-0" id="new" th:field="${userNewPasswordDto.newPassword}">
+
+                                    <label for="newRepeat">Repeat new password</label>
+
+                                    <input type="password" class="form-control mb-1" id="newRepeat" th:field="${userNewPasswordDto.newPasswordRepeated}">
+                                    <div class="row justify-content-center">
+                                        <div class="col-sm-3">
+                                            <button type="submit" class="btn btn-primary btn-sm">Change</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h4 class="card-title">Helpful statistics for you</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6 class="card-title">Your busiest days</h6>
+                    </div>
+                    <div class="col-sm-2">
+                            <div class="col-sm-2">
+                                <span class="badge bg-warning text-dark me-1" th:each="day : ${info.busiestDays}" th:text="${day.name()}"></span>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6 class="card-title">Total amount of homework</h6>
+                    </div>
+                    <div class="col-sm-2">
+                           <div class="row justify-content-center">
+                               <div class="col-sm-6">
+                                   <span class="badge bg-warning text-dark me-1" th:text="${info.getHomeworkCount()}"></span>
+                               </div>
+                           </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6 class="card-title">Done homework amount</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="badge bg-warning text-dark me-1" th:text="${info.getHomeworkPast()}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6 class="card-title">Waiting homework amount</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="badge bg-warning text-dark me-1" th:text="${info.getHomeworkFuture()}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6 class="card-title">Total amount of lessons</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6">
+                                <span class="badge bg-warning text-dark me-1" th:text="${info.lessonCount}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <h4 class="card-title">Best marks for last week</h4>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="card mx-1 shadow bg-body " style="width: 10rem; height: 8rem; border-radius: 10px;" th:each="mark : ${info.getBestMarks()}" >
+                            <div class="card-body pe-0 ps-0 pt-1"><div class="row justify-content-center">
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-sm-1">
+                                        <h5 class="card-title mb-0" th:text="${mark.value}"></h5>
+                                    </div>
+                                    <h6 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${mark.homework.name}"></h6>
+                                    <h6 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${mark.homework.lesson.name}"></h6>
+                                    <h6 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${mark.homework.lesson.teacher.name}"></h6>
+                                    <h6 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${mark.dateTime.toLocalDate()}"></h6>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

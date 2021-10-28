@@ -41,8 +41,10 @@ public class TeacherController {
         List<Homework> homework = homeworkService.getAllForTeacher(user);
         List<MarkHomeworkDto> homeworkMarks = new ArrayList<>();
         for (Homework h : homework) {
-            MarkHomeworkDto tmp = new MarkHomeworkDto(h, homeworkService.getForHomework(h));
-            homeworkMarks.add(tmp);
+            if(h.getLesson().getStudents().size() != 0){
+                MarkHomeworkDto tmp = new MarkHomeworkDto(h, homeworkService.getForHomework(h));
+                homeworkMarks.add(tmp);
+            }
         }
         modelAndView.addObject("homeworkAndMarks", homeworkMarks);
         return modelAndView;

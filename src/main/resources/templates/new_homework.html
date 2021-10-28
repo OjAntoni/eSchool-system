@@ -11,28 +11,38 @@
     <div class="row justify-content-center">
         <div th:if="${lessons.isEmpty()}" class="col-sm-8" th:insert="_no_data :: div"></div>
         <div th:unless="${lessons.isEmpty}" class="col-sm-8 mt-2">
-            <form action="#" th:action="@{/lesson/add/homework}" th:object="${newHomework}" method="post">
-                <select class="form-select" th:field="*{lessonId}" aria-label="Default select example" >
-                    <option th:each="l : ${lessons}" th:value="${l.id}"><span th:text="${l.name}"></span></option>
-                </select>
-                <div class="mb-3">
-                    <input type="text" class="form-control" th:field="*{name}" placeholder="Description" required/>
+            <div class="card shadow bg-body">
+                <div class="card card-body">
+                    <form action="#" th:action="@{/lesson/add/homework}" th:object="${newHomework}" method="post">
+                        <label for="lesson_select">Choose lesson</label>
+                        <select class="form-select mb-1" id="lesson_select" th:field="*{lessonId}" aria-label="Default select example" >
+                            <option th:each="l : ${lessons}" th:value="${l.id}"><span th:text="${l.name}"></span></option>
+                        </select>
+                        <div class="mb-3">
+                            <label for="name">Homework name</label>
+                            <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Name" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" th:field="*{description}" rows="10" placeholder="Description" required></textarea>
+                        </div>
+                        <label for="start">Ending date</label>
+                        <input type="date" id="start" th:field="*{date}" required
+                               min="01-01-2000"
+                               value="2000-01-01"
+                               th:value="${T(java.time.LocalDate).now().plusDays(1)}"
+                               th:min="${T(java.time.LocalDate).now().plusDays(1)}">
+                        <label for="time">Ending time</label>
+                        <input type="time" id="time" th:field="*{time}" required>
+                        <button type="submit" class="btn btn-primary ms-5">Send homework</button>
+                        <div class="row justify-content-center mt-1">
+                            <div class="col-sm-3">
+
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <textarea class="form-control" th:field="*{description}" placeholder="Description" required></textarea>
-                </div>
-                <input type="date" id="start" th:field="*{date}" required
-                       min="01-01-2000"
-                       value="2000-01-01"
-                       th:value="${T(java.time.LocalDate).now().plusDays(1)}"
-                       th:min="${T(java.time.LocalDate).now().plusDays(1)}">
-                <input type="time" th:field="*{time}" required>
-                <div class="row justify-content-center">
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-primary ms-1">Send homework</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

@@ -16,14 +16,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull @NotEmpty @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]{3,10}$", message = "Change your name")
+    @Pattern(regexp = UserDataRegex.NAME_REGEX, message = "Change your name")
     private String name;
     @NotNull @NotEmpty @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9_-]{5,15}$", message = "Change your username")
+    @Pattern(regexp = UserDataRegex.USERNAME_REGEX, message = "Change your username")
     private String username;
     @NotNull @NotEmpty @NotBlank
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,16}$",
-            message = "Too simple password")
+    @Pattern(regexp = UserDataRegex.PASSWORD_REGEX,
+            message = "Change your password")
     private String password;
     @NotNull @NotEmpty @NotBlank
     @Email

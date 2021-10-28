@@ -4,6 +4,7 @@ import by.tms.schoolmanagementsystem.entity.homework.Homework;
 import by.tms.schoolmanagementsystem.entity.mark.Mark;
 import by.tms.schoolmanagementsystem.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 

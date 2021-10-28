@@ -12,35 +12,37 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-8 mt-2">
-            <div th:each="component : ${homeworkAndMarks}">
-                <p>
+            <div class="row" th:each="component : ${homeworkAndMarks}">
+                <div th:if="${component.marks.size()!=0}" class="col-sm-12 mb-1">
                     <a class="btn btn-primary" data-bs-toggle="collapse" th:href="'#'+'collapseExample'+${component.homework.id}"
-                       role="button" aria-expanded="false" aria-controls="collapseExample" th:text="${component.homework.name}">
+                       role="button" aria-expanded="false" aria-controls="collapseExample" th:text="${component.homework.name}" style="width: 100%; background-color: darkgoldenrod; border-width: 0">
                     </a>
-                </p>
-                <div class="collapse" th:id="collapseExample+${component.homework.id}">
-                    <form action="#" th:action="@{'/teacher/marks/'+${component.homework.id}}" method="post">
-                        <div class="card card-body" th:each="mark : ${component.marks}">
-                            <div class="row justify-content-between">
-                                <div class="col-sm-6">
-                                    <span th:text="${mark.user.name}"></span>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="number" th:value="${mark.id}" hidden th:name="marksIds">
-                                    <input type="number" th:value="${mark.value}" th:name="values">
-                                </div>
+                    <div class="collapse" th:id="collapseExample+${component.homework.id}">
+                        <div class="card card-body">
+                            <div class="row">
+                                <form action="#" th:action="@{'/teacher/marks/'+${component.homework.id}}" method="post">
+                                    <div class="card card-body" th:each="mark : ${component.marks}">
+                                        <div class="row justify-content-between">
+                                            <div class="col-sm-4">
+                                                <span th:text="${mark.user.name}"></span>
+                                            </div>
+                                            <div class="col-sm-1 me-4" >
+                                                <input type="number" th:value="${mark.id}" hidden th:name="marksIds">
+                                                <input type="number" style="width: 50px;" th:value="${mark.value}" th:name="values">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-end mb-0">
+                                        <div class="col-sm-2 mt-1 mb-1">
+                                            <button type="submit" style="margin-left: 20px">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="col-sm-2">
-                                <button type="submit">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

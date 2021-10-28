@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -128,5 +129,34 @@ public class HomeworkService {
             homework.addAll(h);
         }
         return new ArrayList<>(homework);
+    }
+
+    public List<Mark> getAllMarksForStudent(User student){
+        ArrayList<Lesson> allByStudentsContains = lessonRepository.findAllByStudentsContains(student);
+        List<Mark> studentMarks = new ArrayList<>();
+        for (Lesson it : allByStudentsContains) {
+            List<Mark> marksTmp = getForLesson(it).stream().filter(mark -> mark.getUser().equals(student)).collect(Collectors.toList());
+            studentMarks.addAll(marksTmp);
+        }
+        return studentMarks;
+    }
+
+    public List<Mark> getAllMarksForTeacher(User teacher){
+        ArrayList<Lesson> allByStudentsContains = lessonRepository.findAllByTeacher(teacher);
+        List<Mark> teacherMarks = new ArrayList<>();
+        for (Lesson it : allByStudentsContains) {
+            teacherMarks.addAll(getForLesson(it));
+        }
+        return teacherMarks;
+    }
+
+    private List<Mark> getForLesson(Lesson lesson){
+        ArrayList<Homework> allByLesson = homeworkRepository.getAllByLesson(lesson);
+        List<Mark> marks = new ArrayList<>();
+        for (Homework homework : allByLesson) {
+            ArrayList<Mark> allByHomework = markRepository.getAllByHomework(homework);
+            marks.addAll(allByHomework);
+        }
+        return marks;
     }
 }
