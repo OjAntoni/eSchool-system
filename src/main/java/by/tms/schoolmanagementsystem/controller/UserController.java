@@ -164,7 +164,6 @@ public class UserController {
 
     @GetMapping("/password/code")
     public ModelAndView getCodePage(ModelAndView modelAndView){
-        System.out.println("/password/code отработало");
         modelAndView.setViewName("password_code");
         modelAndView.addObject("invalidCode", false);
         return modelAndView;
@@ -284,5 +283,40 @@ public class UserController {
         modelAndView.addObject("userNewPasswordDto", new UserNewPasswordDto());
         modelAndView.setViewName("my_account");
         return modelAndView;
+    }
+
+    @GetMapping("/announcement/my")
+    public ModelAndView getMyAnnouncements(ModelAndView modelAndView, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        List<Announcement> allByAuthor = newsService.getAllByAuthor(user);
+        modelAndView.addObject("my_announcements", allByAuthor);
+        modelAndView.setViewName("my_announcements");
+        return modelAndView;
+    }
+
+    @PostMapping("/announcement/{id}/delete")
+    public ModelAndView deleteAnnouncement(@PathVariable long id, HttpSession session){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = (User) session.getAttribute("user");
+        Optional<Announcement> byId = newsService.getById(id);
+        if(byId.isEmpty()){
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
+        }
+        Announcement announcement = byId.get();
+        if(user.getRole() != Role.Admin){
+            if(!announcement.getAuthor().equals(user)){
+                modelAndView.setViewName("redirect:/home");
+                return modelAndView;
+            }
+        }
+        newsService.deleteById(id);
+        modelAndView.setViewName("redirect:/user/announcement/my");
+        return modelAndView;
+    }
+
+    @GetMapping("/messages")
+    public ModelAndView getMessages(HttpSession session){
+        return null;
     }
 }

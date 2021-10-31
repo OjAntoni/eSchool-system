@@ -18,9 +18,21 @@
         </div>
 
     <div class="row justify-content-center">
-        <div class="col-sm-12">
+        <div class="col-sm-10">
             <div class="list-group">
-                <a th:href="@{'/lesson/'+${lesson.id}}" class="list-group-item list-group-item-action" th:each="lesson : ${lessons}" th:text="${lesson}"></a>
+                <a th:href="@{'/lesson/'+${lesson.id}}" class="list-group-item list-group-item-action" th:each="lesson : ${lessons}">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-4">
+                            <h5 class="me-1" th:text="${lesson.name}"></h5>
+                        </div>
+                        <div class="col-sm-5 text-end">
+                            <span class="me-1" th:text="${lesson.day.name() + ' ' + lesson.lessonPlan.timeTerm.timeBlock.stringValue}"></span>
+                        </div>
+                    </div>
+
+                    <span th:text="${lesson.teacher.name}"></span>
+                    <span th:text="${lesson.teacher.email}"></span>
+                </a>
             </div>
         </div>
     </div>

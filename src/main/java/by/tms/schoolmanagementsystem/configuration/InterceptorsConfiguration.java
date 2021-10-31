@@ -28,7 +28,8 @@ public class InterceptorsConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new AdminInterceptor())
                 .addPathPatterns("/admin/**");
         registry.addInterceptor(new NotStudentInterceptor())
-                .addPathPatterns("/user/announcement/new/**");
+                .addPathPatterns("/user/announcement/new/**")
+                .addPathPatterns("/user/announcement/my");
         registry.addInterceptor(new AuthorizedInterceptor())
                 .addPathPatterns("/user/auth")
                 .addPathPatterns("/user/reg");

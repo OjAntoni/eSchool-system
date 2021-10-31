@@ -56,7 +56,7 @@ public class LessonService {
 
     @Transactional
     public List<Lesson> getAllForStudent(User student){
-        if(student==null || !userRepository.existsById(student.getId())){
+        if(student==null || !userRepository.existsById(student.getId()) || student.getRole()!=Role.Student){
             return List.of();
         } else {
             return lessonRepository.findAllByStudentsContains(student);

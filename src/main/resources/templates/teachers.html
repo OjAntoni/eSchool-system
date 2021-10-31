@@ -10,19 +10,38 @@
 
 <body>
     <div class="container">
-        <div class="row justify-content-center mt-1">
-            <div class="col-sm-8">
-                <ul class="list-group">
-                    <li th:each="teacher : ${myTeachers}" class="list-group-item">
-                        <span th:text="${teacher}"></span>
-                    </li>
-                </ul>
-                <th:block th:unless="${session.user.role==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
-                    <div style="margin-left: 20%" th:insert="_no_data :: div"></div>
-                </th:block>
+        <div th:if="${session.user.getRole()!=T(by.tms.schoolmanagementsystem.entity.role.Role).Student}">
+            <div th:insert="_no_data :: div"></div>
+        </div>
+        <div th:if="${session.user.getRole()==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}" class="row">
+            <div class="row justify-content-center">
+                <div class="col-sm-8 text-center">
+                    <h4 class="card-title ms-5">My teachers</h4>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="card mx-1 shadow bg-body mb-0" style="width: 15rem; height: 10rem; border-radius: 10px;" th:each="teacher : ${myTeachers}" >
+                    <div class="card-body pe-0 ps-0 pt-1">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-7 text-nowrap text-center">
+                                <h4 class="card-title mb-0" th:text="${teacher.name}"></h4>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-7 text-nowrap text-center">
+                                <h5 class="card-subtitle mb-0 text-muted" style="margin-top: 6px" th:text="${teacher.username}"></h5>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-sm-12 text-nowrap text-center">
+                                <h5 class="card-subtitle mb-0 text-muted" style="margin-top: 3px" th:text="${teacher.email}"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

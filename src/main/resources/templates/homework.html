@@ -15,8 +15,7 @@
                         <h5 class="card-title" th:text="${homework.name}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${homework.deadline.toLocalDate()}"></h6>
                         <p class="card-text" th:text="${homework.description}"></p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <a href="#" th:href="@{/home}" class="card-link">Go Home</a>
                     </div>
                 </div>
             </div>

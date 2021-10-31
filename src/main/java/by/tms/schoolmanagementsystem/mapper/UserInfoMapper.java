@@ -87,6 +87,7 @@ public class UserInfoMapper {
         List<Mark> marks;
         if(user.getRole()==Role.Student){
             marks = homeworkService.getAllMarksForStudent(user);
+            System.out.println(marks);
         } else {
             marks = homeworkService.getAllMarksForTeacher(user);
         }

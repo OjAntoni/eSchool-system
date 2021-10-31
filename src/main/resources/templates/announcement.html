@@ -20,8 +20,48 @@
                             <h6 class="card-subtitle mb-2 text-muted" th:text="${announcement.localDateTime.toLocalDate() + ' ' + announcement.localDateTime.toLocalTime()}"></h6>
                         </div>
                         <p class="card-text" th:text="${announcement.text}"></p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="card-link">About author</a>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Author</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row justify-content-between">
+                                            <div class="col-sm-5 text-start">
+                                                <span>Name:</span>
+                                            </div>
+                                            <div class="col-sm-7 text-nowrap text-end">
+                                                <span th:text="${announcement.author.name}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-sm-5 text-start">
+                                                <span>Username:</span>
+                                            </div>
+                                            <div class="col-sm-7 text-nowrap text-end">
+                                                <span th:text="${announcement.author.username}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-sm-5 text-start">
+                                                <span>Email:</span>
+                                            </div>
+                                            <div class="col-sm-7 text-nowrap text-end">
+                                                <span th:text="${announcement.author.email}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a th:if="${session.user.getRole()==T(by.tms.schoolmanagementsystem.entity.role.Role).Student}" href="#" th:href="@{/home}" class="card-link">Go home</a>
+                        <a th:if="${session.user.getRole()!=T(by.tms.schoolmanagementsystem.entity.role.Role).Student}" href="#" th:href="@{/user/announcement/my}" class="card-link">My announcements</a>
+
                     </div>
                 </div>
             </div>

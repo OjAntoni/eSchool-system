@@ -135,7 +135,7 @@ public class HomeworkService {
         ArrayList<Lesson> allByStudentsContains = lessonRepository.findAllByStudentsContains(student);
         List<Mark> studentMarks = new ArrayList<>();
         for (Lesson it : allByStudentsContains) {
-            List<Mark> marksTmp = getForLesson(it).stream().filter(mark -> mark.getUser().equals(student)).collect(Collectors.toList());
+            List<Mark> marksTmp = getForLesson(it).stream().filter(mark -> mark.getUser().getId()==student.getId()).collect(Collectors.toList());
             studentMarks.addAll(marksTmp);
         }
         return studentMarks;

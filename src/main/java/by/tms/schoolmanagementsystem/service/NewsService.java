@@ -34,4 +34,11 @@ public class NewsService {
     public Optional<Announcement> getById(long id){
         return announcementRepository.findById(id);
     }
+
+    @Transactional
+    public void deleteById(long id){
+        if (announcementRepository.existsById(id)) {
+            announcementRepository.deleteById(id);
+        }
+    }
 }

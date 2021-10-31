@@ -10,4 +10,5 @@ import java.util.ArrayList;
 public interface AnnouncementRepository extends JpaRepository<Announcement, Long> {
     ArrayList<Announcement> getAllByDestinationRoleOrderByLocalDateTimeDesc(UserRole userRole);
     ArrayList<Announcement> getAllByAuthorOrderByLocalDateTimeDesc(User author);
+    void deleteById(long id);
 }
